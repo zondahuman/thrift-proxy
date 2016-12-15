@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>thrift-proxy</artifactId>
+        <groupId>com.abin.lee</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>thrift-proxy-service</artifactId>
+
+
+    <packaging>war</packaging>
+
+
+    <dependencies>
+        <!--内部引用-->
+        <dependency>
+            <artifactId>thrift-proxy-api</artifactId>
+            <groupId>com.abin.lee</groupId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <artifactId>thrift-proxy-common</artifactId>
+            <groupId>com.abin.lee</groupId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+    </dependencies>
+
+
+    <profiles>
+        <profile>
+            <id>local</id>
+            <properties>
+                <env>local</env>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <env>dev</env>
+            </properties>
+        </profile>
+        <profile>
+            <id>beta</id>
+            <properties>
+                <env>beta</env>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <env>prod</env>
+            </properties>
+        </profile>
+    </profiles>
+
+
+    <build>
+        <finalName>thrift-main</finalName>
+
+        <!--<filters>-->
+        <!--<filter>${basedir}/src/main/profiles/${env}/${env}.properties</filter>-->
+        <!--<filter>${basedir}/src/main/profiles/${env}/*.xml</filter>-->
+        <!--</filters>-->
+        <resources>
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>${basedir}/src/main/profiles/${env}</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+
+    </build>
+
+
+</project>

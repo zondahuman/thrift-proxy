@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <context:annotation-config />
+    <context:property-placeholder location="classpath*:/*.properties" ignore-unresolvable="true"/>
+
+
+
+    <!-- zookeeper -->
+    <bean id="thriftZookeeper" class="com.abin.lee.thrift.common.rpc.factory.ZookeeperFactory"
+          destroy-method="close" >
+        <property name="zkHosts"
+                  value="${thrift.zookeeper.address}" />
+        <property name="namespace" value="com.abin.lee.rpc" />
+        <property name="connectionTimeout" value="3000" />
+        <property name="sessionTimeout" value="3000" />
+        <property name="singleton" value="true" />
+    </bean>
+    <bean id="sericeAddressRegister"
+          class="com.abin.lee.thrift.common.rpc.service.impl.ThriftServerAddressRegisterZookeeper"
+          destroy-method="close">
+        <property name="zkClient" ref="thriftZookeeper" />
+    </bean>
+
+
+    <bean id="userService" class="com.abin.lee.thrift.common.rpc.factory.ThriftServiceServerFactory">
+        <property name="service" ref="userServiceImpl" />
+        <property name="version" value="1.0.0" />
+        <property name="weight" value="1" />
+        <property name="thriftServerAddressRegister" ref="sericeAddressRegister" />
+    </bean>
+
+    <bean id="helloService" class="com.abin.lee.thrift.common.rpc.factory.ThriftServiceServerFactory" >
+        <property name="service" ref="helloServiceImpl" />
+        <property name="version" value="1.0.0" />
+        <property name="weight" value="1" />
+        <property name="thriftServerAddressRegister" ref="sericeAddressRegister" />
+    </bean>
+
+
+
+
+
+
+
+
+
+
+
+
+</beans>

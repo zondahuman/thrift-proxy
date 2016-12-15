@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+				http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+				http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd"
+	default-lazy-init="false">
+
+	<!-- zookeeper   -->
+	<bean id="thriftZookeeper" class="com.abin.lee.thrift.client.factory.ZookeeperFactory"
+		  destroy-method="close">
+		<property name="zkHosts"
+				  value="${thrift.zookeeper.address}" />
+		<property name="namespace" value="com.abin.lee.rpc" />
+		<property name="connectionTimeout" value="3000" />
+		<property name="sessionTimeout" value="3000" />
+		<property name="singleton" value="true" />
+	</bean>
+	<bean id="helloSerivce" class="com.abin.lee.thrift.client.factory.ThriftServiceClientProxyFactory" destroy-method="close">
+		<property name="maxActive" value="5" />
+		<property name="idleTime" value="1800000" />
+		<property name="serverAddressProvider">
+			<bean class="com.abin.lee.thrift.client.service.impl.ThriftServerAddressProviderZookeeper">
+				<property name="service" value="com.abin.lee.thrift.api.HelloService" />
+				<property name="version" value="1.0.0" />
+				<property name="zkClient" ref="thriftZookeeper" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="userSerivce" class="com.abin.lee.thrift.client.factory.ThriftServiceClientProxyFactory" destroy-method="close">
+		<property name="maxActive" value="5" />
+		<property name="idleTime" value="1800000" />
+		<property name="serverAddressProvider">
+			<bean class="com.abin.lee.thrift.client.service.impl.ThriftServerAddressProviderZookeeper">
+				<property name="service" value="com.abin.lee.thrift.api.UserService" />
+				<property name="version" value="1.0.0" />
+				<property name="zkClient" ref="thriftZookeeper" />
+			</bean>
+		</property>
+	</bean>
+    
+</beans>

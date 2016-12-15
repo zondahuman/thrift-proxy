@@ -1,0 +1,25 @@
+thrift -o <output directory> -gen java Hello.thrift
+
+
+
+
+cd E:\SystemWork\opensource\thrift\install
+E:
+thrift-0.9.3.exe -o service -gen java user.thrift
+thrift-0.9.3.exe -o service -gen java hello.thrift
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
