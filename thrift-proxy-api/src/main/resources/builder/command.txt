@@ -6,7 +6,14 @@ thrift -o <output directory> -gen java Hello.thrift
 cd E:\SystemWork\opensource\thrift\install
 E:
 thrift-0.9.3.exe -o service -gen java user.thrift
-thrift-0.9.3.exe -o service -gen java hello.thrift
+
+
+
+thrift-0.9.3.exe -o service -gen java idl/hello/HelloInvariant.thrift
+thrift-0.9.3.exe -o service -gen java idl/hello/HelloException.thrift
+thrift-0.9.3.exe -o service -gen java idl/hello/OperateType.thrift
+thrift-0.9.3.exe -o service -gen java idl/hello/HelloInfo.thrift
+thrift-0.9.3.exe -o service -gen java idl/hello/hello.thrift
 
 
 
