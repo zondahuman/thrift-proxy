@@ -177,6 +177,13 @@ public class ThriftClientController {
         return result;
     }
 
+    /**
+     *
+     * http://localhost:7200/findUser5
+     *
+     * @return
+     * @throws TException
+     */
     @RequestMapping(value = "/findUser5", method = RequestMethod.GET)
     @ResponseBody
     public String findUser5() throws TException {
