@@ -63,7 +63,7 @@
 
 
     <build>
-        <finalName>thrift-main</finalName>
+        <finalName>thrift-rpc-server</finalName>
 
         <!--<filters>-->
         <!--<filter>${basedir}/src/main/profiles/${env}/${env}.properties</filter>-->

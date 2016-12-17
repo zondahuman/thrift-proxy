@@ -38,6 +38,14 @@ Http(thrift-svr-client)--------------->Thrift RPC Client(thrift-svr-client)-----
 
 3、Thrift RPC Client Calls Automatically Thrift RPC Service Which achieve functions That By Meaning Of Java Reflections By The Method Name.
 
+四、Registry Center
+
+1、Thrift RPC Service(thrift-svr-service) register to the zookeeper as RPC Service Provider.
+
+2、Thrift RPC Client(thrift-svr-client) pull RPC Service Provider Service Lists(includes IP:PORT:WEIGHT) that conenct to zookeeper.
+
+3、Thrift RPC Client request Thrift RPC Service By IP And Port which from The Above Step.
+
 
 The Appendix:
 

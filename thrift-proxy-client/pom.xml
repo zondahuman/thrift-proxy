@@ -57,7 +57,7 @@
 
 
     <build>
-        <finalName>thrift-client</finalName>
+        <finalName>thrift-rpc-client</finalName>
 
         <!--<filters>-->
         <!--<filter>${basedir}/src/main/profiles/${env}/${env}.properties</filter>-->
