@@ -1,7 +1,7 @@
 # thrift-proxy
 Support for integrate Spring, Curator in Thrift
 
-This Application includes Two Parts(Step One:Thrift Server, Step Two:Thrift Client):
+一、This Application includes Two Parts(Step One:Thrift Server, Step Two:Thrift Client):
 
 Step One:(Thrift Server)
 
@@ -18,7 +18,7 @@ Step Two:(Thrift Client)
 1、thrift-svr-client (Call XXXXXXService.Iface , It achieve some functions that It can Call Automatically By Annotation).
 
 
-How to use it?
+二、How to use it?
 
 First:
 
@@ -27,6 +27,16 @@ First:
 Second:
 
     Run thrift-svr-client  by tomcat.
+
+三、Calling order
+
+Http(thrift-svr-client)--------------->Thrift RPC Client(thrift-svr-client)------------->Thrift RPC Service(thrift-svr-service)
+
+1、thrift-svr-client Provider Http Service By SpringMVC Controller
+
+2、Http Service Calls Thrift RPC Client
+
+3、Thrift RPC Client Calls Automatically Thrift RPC Service Which achieve functions That By Meaning Of Java Reflections By The Method Name.
 
 
 The Appendix:
