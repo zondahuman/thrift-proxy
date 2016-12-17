@@ -30,24 +30,25 @@ import java.util.Map;
  * 服务端注册服务工厂
  */
 @Component
-public class ThriftServiceServerStartUp implements InitializingBean,Closeable,Ordered  {
+public class ThriftServiceServerStartUp implements InitializingBean, Closeable, Ordered {
 
-//    private ThriftServiceServerFactory thriftServiceServerFactory;
+    //    private ThriftServiceServerFactory thriftServiceServerFactory;
     //服务注册
     @Resource
-ThriftServerAddressRegister thriftServerAddressRegister;
+    ThriftServerAddressRegister thriftServerAddressRegister;
     private ServerThread serverThread;
-    private Integer port=9000;
+    private Integer port = 9000;
     //    private final TMultiplexedProcessor processor = new TMultiplexedProcessor();
     // 解析本机IP
     @Resource
     ThriftServerIpResolve thriftServerIpResolve;
+
     @Override
     public void afterPropertiesSet() throws Exception {
         Map<String, TProcessor> processorMap = Maps.newConcurrentMap();
         Map<String, String> registerMap = Maps.newConcurrentMap();
         Map<String, ThriftServiceServerFactory> handlers = SpringContextUtils.getBeansOfType(ThriftServiceServerFactory.class);
-        for(Iterator<Map.Entry<String, ThriftServiceServerFactory>> iterator=handlers.entrySet().iterator();iterator.hasNext();){
+        for (Iterator<Map.Entry<String, ThriftServiceServerFactory>> iterator = handlers.entrySet().iterator(); iterator.hasNext(); ) {
             Map.Entry<String, ThriftServiceServerFactory> entry = iterator.next();
             String beanName = entry.getKey();
             ThriftServiceServerFactory instance = entry.getValue();
@@ -91,7 +92,7 @@ ThriftServerAddressRegister thriftServerAddressRegister;
             if (processor == null) {
                 throw new IllegalClassFormatException("service-class should implements Iface");
             }
-            processorMap.put(serviceName,processor);
+            processorMap.put(serviceName, processor);
             registerMap.put(serviceName, version + "|" + hostname);
         }
 
@@ -108,12 +109,13 @@ ThriftServerAddressRegister thriftServerAddressRegister;
 
     class ServerThread extends Thread {
         private TServer server;
+
         ServerThread(Map<String, TProcessor> processorMap, int port) throws Exception {
             TNonblockingServerSocket serverTransport = new TNonblockingServerSocket(port);
             TThreadedSelectorServer.Args tArgs = new TThreadedSelectorServer.Args(serverTransport);
             TMultiplexedProcessor processor = new TMultiplexedProcessor();
 
-            for(Iterator<Map.Entry<String, TProcessor>> iterator=processorMap.entrySet().iterator();iterator.hasNext();) {
+            for (Iterator<Map.Entry<String, TProcessor>> iterator = processorMap.entrySet().iterator(); iterator.hasNext(); ) {
                 Map.Entry<String, TProcessor> entry = iterator.next();
                 String beanName = entry.getKey();
                 TProcessor instance = entry.getValue();
@@ -122,21 +124,21 @@ ThriftServerAddressRegister thriftServerAddressRegister;
             TProcessorFactory processorFactory = new TProcessorFactory(processor);
             tArgs.processorFactory(processorFactory);
             tArgs.transportFactory(new TFramedTransport.Factory());
-            tArgs.protocolFactory( new TBinaryProtocol.Factory(true, true));
+            tArgs.protocolFactory(new TBinaryProtocol.Factory(true, true));
             server = new TThreadedSelectorServer(tArgs);
         }
 
         @Override
-        public void run(){
-            try{
+        public void run() {
+            try {
                 //启动服务
                 server.serve();
-            }catch(Exception e){
+            } catch (Exception e) {
                 //
             }
         }
 
-        public void stopServer(){
+        public void stopServer() {
             server.stop();
         }
     }

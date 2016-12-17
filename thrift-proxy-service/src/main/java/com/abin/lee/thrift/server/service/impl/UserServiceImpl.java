@@ -26,8 +26,8 @@ public class UserServiceImpl implements UserService.Iface {
 
 
     @Override
-    public String sayUser(String username) throws TException {
-        String result = "sayUser-hello-"+username;
+    public String sayUser(String userName) throws TException {
+        String result = "sayUser-hello-"+userName;
         System.out.println("sayUser-result="+result);
         return result;
     }
