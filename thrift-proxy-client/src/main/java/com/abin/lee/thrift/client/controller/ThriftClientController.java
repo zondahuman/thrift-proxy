@@ -45,9 +45,16 @@ public class ThriftClientController {
         return result;
     }
 
-    @RequestMapping(value = "/sayHello1", method = RequestMethod.GET)
+    @RequestMapping(value = "/sayHello1", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public String sayHello1(String param) throws TException {
+        String result = helloService.sayHello(param);
+        return result;
+    }
+
+    @RequestMapping(value = "/sayHello2", method = {RequestMethod.PUT, RequestMethod.DELETE})
+    @ResponseBody
+    public String sayHello2(String param) throws TException {
         String result = helloService.sayHello(param);
         return result;
     }
