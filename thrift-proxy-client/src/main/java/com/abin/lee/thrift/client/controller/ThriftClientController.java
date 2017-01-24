@@ -45,6 +45,13 @@ public class ThriftClientController {
         return result;
     }
 
+    @RequestMapping(value = "/sayHello1", method = RequestMethod.GET)
+    @ResponseBody
+    public String sayHello1(String param) throws TException {
+        String result = helloService.sayHello(param);
+        return result;
+    }
+
     /**
      *
      * http://localhost:7200/findHelloInfo
